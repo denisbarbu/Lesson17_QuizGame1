@@ -1,11 +1,23 @@
 import copy
+import datetime
 import json
 import random
 import time
 
 POSSIBLE_ANSWERS = {0: 'a.',1: 'b.', 2: 'c.', 3: 'd.'}
-def change_highscore():
-    pass
+def change_highscore(player_id: str, score: int, path: str = "users.json"):
+    try:
+        with open(path, "r+") as f:
+            players = json.loads(f.read())
+            players[player_id]['high_score'] = score
+            players[player_id]['date'] = datetime.datetime.now().strftime("%Y/%m/%d, %H:%M")
+            f.seek(0)
+            f.write(json.dumps(players, indent=4))
+    except Exception as e:
+        print(f"Failed to save the highscore of {player_id}. \n Error is {e}")
+    else:
+        print("Successfully saved the new hogh score")
+
 def run_game(player: dict, questions_path: str = "questions.json") -> int:
     scor = 0
     with open(questions_path, "r") as f:
@@ -18,7 +30,7 @@ def run_game(player: dict, questions_path: str = "questions.json") -> int:
     while copy_questions:
         questions_obj = random.choice(copy_questions)
 
-        print(questions_obj)
+
         print(questions_obj['question'])
         for index, answer in enumerate(questions_obj['answers']):
             print(f"{POSSIBLE_ANSWERS[index]} {answer}")
@@ -38,7 +50,7 @@ def run_game(player: dict, questions_path: str = "questions.json") -> int:
     print(f"You have answered to {scor} questions")
 
     if scor > player[list(player.keys())[0]]['high_score']:
-        change_highscore()
+        change_highscore(player_id=list(player.keys())[0], score=scor)
 
     return 1
 

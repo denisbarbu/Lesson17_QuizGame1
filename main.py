@@ -1,7 +1,7 @@
 # create a quiz game with admin and players. A user has to login.
 #if player, then he can play, if admin can add questions
 import time
-
+import coloredlogs
 import admin_functions
 import users
 import game

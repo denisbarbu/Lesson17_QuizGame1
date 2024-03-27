@@ -2,6 +2,7 @@
 #if player, then he can play, if admin can add questions
 import time
 
+import admin_functions
 import users
 import game
 
@@ -14,10 +15,13 @@ if __name__ == '__main__':
     curent_player = users.login()
 
     while True:
+        if list(curent_player.keys())[0] == 'admin':
+            admin_functions.run()
+        else:
+            print(f"let's play ")
+            game.run_game(curent_player)
 
-        print(f"let's play ")
-        game.run_game(curent_player)
+            user_pick = input("Do you want to play again? Y/N")
+            if user_pick.lower() == 'n':
+                break
         time.sleep(2)
-        user_pick = input("Do you want to play again? Y/N")
-        if user_pick.lower() == 'n':
-            break

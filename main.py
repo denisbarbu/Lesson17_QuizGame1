@@ -2,8 +2,7 @@
 #if player, then he can play, if admin can add questions
 
 import users
-
-
+import game
 
 
 if __name__ == '__main__':
@@ -11,4 +10,8 @@ if __name__ == '__main__':
     print(f"{len(welcome_msg) * '='}{welcome_msg}{len(welcome_msg) * '='}")
 
 
-    users.login()
+    curent_player = users.login()
+
+    while True:
+        print(f"let's play ")
+        game.run_game(curent_player)
